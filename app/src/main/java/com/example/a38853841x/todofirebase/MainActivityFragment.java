@@ -43,7 +43,7 @@ public class MainActivityFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference todoRef = database.getReference("ToDoFireBase");
+        final DatabaseReference todoRef = database.getReference("todo");
 
         Button send = (Button) view.findViewById(R.id.bt_send);
 
@@ -61,7 +61,7 @@ public class MainActivityFragment extends Fragment {
 //        );
 
         adapter = new FirebaseListAdapter<String>(
-                (Activity) getContext(), String.class, R.layout.item_celda, todoRef)
+                getActivity(), String.class, R.layout.item_celda, todoRef)
         {
             @Override
             protected void populateView(View v, String model, int position) {
@@ -82,7 +82,7 @@ public class MainActivityFragment extends Fragment {
                // item.setText("");
 
                 String text = item.getText().toString();
-                if (text.equals("")){
+                if (!text.equals("")){
 
                     DatabaseReference newReference = todoRef.push();
                     newReference.setValue(text);
